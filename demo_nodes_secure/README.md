@@ -10,7 +10,8 @@ ros2_secure_node(NODES <node_1> <node_2>...<node_n>)
 ```
 
 It also adds the machinery for the `listener_best_effort` cpp demo
-directly from the source package.
+and the [action tutorial `fibonacci`](https://github.com/ros2/demos/tree/master/action_tutorials)
+directly from the source packages.
 
 After building the package,
 
@@ -21,3 +22,4 @@ colcon build --symlink-install --packages-select demo_nodes_secure
 those secured demo can be run directly from the provided launch files  
 *   `talker_listener_secure.launch.py`
 *   `talker_listener_secure_best_effort.launch.py`
+*   `fibonacci.launch.py`
