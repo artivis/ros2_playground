@@ -1,4 +1,4 @@
-# demo_nodes_secure_cpp
+# demo_nodes_secure
 
 This package only copies the `talker` & `listener` cpp demo from
 [demo_nodes_cpp](https://github.com/ros2/demos/tree/master/demo_nodes_cpp)
@@ -14,9 +14,8 @@ directly from the source package.
 
 After building the package,
 
-<!--colcon build --symlink-install --packages-select demo_nodes_secure_cpp --event-handler console_cohesion+ --cmake-force-configure-->
 ```terminal
-colcon build --symlink-install --packages-select demo_nodes_secure_cpp
+colcon build --symlink-install --packages-select demo_nodes_secure
 ```
 
 those secured demo can be run directly from the provided launch files  

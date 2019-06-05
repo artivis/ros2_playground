@@ -23,14 +23,15 @@ from ament_index_python.packages import get_package_prefix
 
 def generate_launch_description():
 
-    ros_security_root_directory = os.path.join(get_package_prefix('demo_nodes_secure_cpp'), 'ros2_security', 'keystore')
+    ros_security_root_directory = os.path.join(get_package_prefix('demo_nodes_secure'), 'ros2_security', 'keystore')
 
     return LaunchDescription([
         SetEnvironmentVariable('ROS_SECURITY_ENABLE', 'true'),
         SetEnvironmentVariable('ROS_SECURITY_STRATEGY', 'Enforce'),
+        # TODO: ROS_SECURITY_NODE_DIRECTORY crashes
         SetEnvironmentVariable('ROS_SECURITY_ROOT_DIRECTORY', ros_security_root_directory),
         launch_ros.actions.Node(
-            package='demo_nodes_secure_cpp', node_executable='talker', output='screen'),
+            package='action_tutorials', node_executable='fibonacci_action_server.py', output='screen'),
         launch_ros.actions.Node(
-            package='demo_nodes_cpp', node_executable='listener_best_effort', output='screen'),
+            package='action_tutorials', node_executable='fibonacci_action_client.py', output='screen'),
     ])

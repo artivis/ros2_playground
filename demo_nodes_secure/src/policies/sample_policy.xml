@@ -6,9 +6,14 @@
       xpointer="xpointer(/policy/profiles/*)"/>
     <xi:include href="listener_best_effort.xml"
       xpointer="xpointer(/policy/profiles/*)"/>
+    <xi:include href="minimal_action.xml"
+      xpointer="xpointer(/policy/profiles/*)"/>
     <profile ns="/" node="admin">
       <xi:include href="common/node.xml"
         xpointer="xpointer(/profile/*)"/>
+      <actions call="ALLOW" execute="ALLOW">
+        <action>fibonacci</action>
+      </actions>
       <topics publish="ALLOW" subscribe="ALLOW">
         <topic>chatter</topic>
       </topics>
