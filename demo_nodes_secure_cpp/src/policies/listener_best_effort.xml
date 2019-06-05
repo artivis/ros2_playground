@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policy version="0.1.0"
+  xmlns:xi="http://www.w3.org/2001/XInclude">
+  <profiles>
+    <profile ns="/" node="listener_best_effort">
+      <xi:include href="common/node.xml"
+        xpointer="xpointer(/profile/*)"/>
+      <topics subscribe="ALLOW" >
+        <topic>chatter</topic>
+      </topics>
+    </profile>
+  </profiles>
+</policy>
