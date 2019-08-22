@@ -52,6 +52,8 @@ TalkerNode::TalkerNode(const rclcpp::NodeOptions & options)
     rclcpp::shutdown();
   }
 
+  this->declare_parameter("writter_name");
+
   init();
 }
 
@@ -72,6 +74,8 @@ bool TalkerNode::init()
     RCLCPP_ERROR(this->get_logger(), "%s", e.what());
   }
 
+  // For the purpose of the demo we'll instantiate a default base
+  // if no derived was loaded.
   if (writter_ptr_ == nullptr)
   {
     RCLCPP_ERROR(this->get_logger(), "Could not load plugin '%s'.", writter_name.c_str());
@@ -135,7 +139,6 @@ void TalkerNode::print_usage() const
   printf("talker [-p plugin_name] [-h]\n");
   printf("options:\n");
   printf("-h : Print this help function.\n");
-  // printf("-p : plugin_name : Specify which plugin to use if any.\n");
 }
 
 } // namespace ros2_playground

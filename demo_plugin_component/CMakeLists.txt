@@ -89,6 +89,6 @@ endif()
 
 ament_export_include_directories(include)
 ament_export_libraries(${PROJECT_NAME}_plugins)
-pluginlib_export_plugin_description_file(ros2_playground plugins_description.xml)
+pluginlib_export_plugin_description_file(demo_plugin_component plugins_description.xml)
 
 ament_package()
