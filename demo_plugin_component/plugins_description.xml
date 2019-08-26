@@ -1,7 +1,7 @@
 <class_libraries>
   <library path="demo_plugin_component_plugins">
-    <class type="ros2_playground::MessageWritterDerived"
-           base_class_type="ros2_playground::MessageWritter">
+    <class type="ros2_playground::MessageWriterDerived"
+           base_class_type="ros2_playground::MessageWriter">
       <description>This is a foo plugin.</description>
     </class>
   </library>

@@ -4,7 +4,7 @@
 #include <rcutils/cmdline_parser.h>
 #include <std_msgs/msg/string.hpp>
 
-#include "demo_plugin_component/message_writter.h"
+#include "demo_plugin_component/message_writer.h"
 
 using namespace std::chrono_literals;
 
@@ -31,14 +31,14 @@ protected:
   rclcpp::TimerBase::SharedPtr timer_;
 
   // Plugin handling
-  pluginlib::ClassLoader<MessageWritter> message_writter_loader_;
-  std::shared_ptr<MessageWritter> writter_ptr_;
-//  class_loader::ClassLoader::UniquePtr<MessageWritter> writter_ptr_;
+  pluginlib::ClassLoader<MessageWriter> message_writer_loader_;
+  std::shared_ptr<MessageWriter> writer_ptr_;
+//  class_loader::ClassLoader::UniquePtr<MessageWriter> writer_ptr_;
 };
 
 TalkerNode::TalkerNode(const rclcpp::NodeOptions & options)
   : Node("talker", options)
-  , message_writter_loader_("demo_plugin_component", "ros2_playground::MessageWritter")
+  , message_writer_loader_("demo_plugin_component", "ros2_playground::MessageWriter")
 {
   auto find_command_option = [](const std::vector<std::string> & args,
                                 const std::string & option) -> bool
@@ -52,18 +52,18 @@ TalkerNode::TalkerNode(const rclcpp::NodeOptions & options)
     rclcpp::shutdown();
   }
 
-  this->declare_parameter("writter_name");
+  this->declare_parameter("writer_name");
 
   init();
 }
 
 bool TalkerNode::init()
 {
-  std::string writter_name;
-  this->get_parameter("writter_name", writter_name);
+  std::string writer_name;
+  this->get_parameter("writer_name", writer_name);
 
   try {
-    writter_ptr_ = message_writter_loader_.createSharedInstance(writter_name);
+    writer_ptr_ = message_writer_loader_.createSharedInstance(writer_name);
   }
   catch (const pluginlib::LibraryLoadException& e)
   {
@@ -76,19 +76,19 @@ bool TalkerNode::init()
 
   // For the purpose of the demo we'll instantiate a default base
   // if no derived was loaded.
-  if (writter_ptr_ == nullptr)
+  if (writer_ptr_ == nullptr)
   {
-    RCLCPP_ERROR(this->get_logger(), "Could not load plugin '%s'.", writter_name.c_str());
+    RCLCPP_ERROR(this->get_logger(), "Could not load plugin '%s'.", writer_name.c_str());
     RCLCPP_ERROR(this->get_logger(), "Trying to instantiate default instead.");
 
-    writter_ptr_ = std::make_shared<MessageWritter>();
+    writer_ptr_ = std::make_shared<MessageWriter>();
 
-//    writter_ptr_ = std::unique_ptr<MessageWritter, class_loader::ClassLoader::DeleterType<MessageWritter>>(
-//          new MessageWritter,
-//          std::bind(&class_loader::ClassLoader::onPluginDeletion<MessageWritter>, this, std::placeholders::_1)
+//    writer_ptr_ = std::unique_ptr<MessageWriter, class_loader::ClassLoader::DeleterType<MessageWriter>>(
+//          new MessageWriter,
+//          std::bind(&class_loader::ClassLoader::onPluginDeletion<MessageWriter>, this, std::placeholders::_1)
 //        )
 
-    if (writter_ptr_ == nullptr)
+    if (writer_ptr_ == nullptr)
     {
       RCLCPP_ERROR(this->get_logger(), "Could not instantiate default either.");
       return false;
@@ -122,14 +122,14 @@ bool TalkerNode::init()
 
 std::unique_ptr<std_msgs::msg::String>
 TalkerNode::getMessage() const {
-  if (writter_ptr_ == nullptr)
+  if (writer_ptr_ == nullptr)
   {
-    RCLCPP_ERROR(this->get_logger(), "MessageWritter is a nullptr!");
+    RCLCPP_ERROR(this->get_logger(), "MessageWriter is a nullptr!");
     return nullptr;
   }
 
   auto msg = std::make_unique<std_msgs::msg::String>();
-  msg->data = writter_ptr_->getMessageData();
+  msg->data = writer_ptr_->getMessageData();
   return msg;
 }
 

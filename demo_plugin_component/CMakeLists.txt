@@ -34,7 +34,7 @@ set(node_dependencies
   std_msgs
 )
 
-add_library(${PROJECT_NAME}_plugins SHARED src/message_writter_derived_export.cpp)
+add_library(${PROJECT_NAME}_plugins SHARED src/message_writer_derived_export.cpp)
 ament_target_dependencies(${PROJECT_NAME}_plugins ${plugins_dependencies})
 
 add_library(${PROJECT_NAME} SHARED
