@@ -41,28 +41,13 @@ add_library(${PROJECT_NAME} SHARED
   src/talker_node.cpp
 )
 ament_target_dependencies(${PROJECT_NAME} ${node_dependencies})
+# prevent pluginlib from using boost
 target_compile_definitions(${PROJECT_NAME} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
 
 rclcpp_components_register_node(${PROJECT_NAME}
   PLUGIN "ros2_playground::TalkerNode"
   EXECUTABLE talker_node
 )
-
-
-# prevent pluginlib from using boost
-# target_compile_definitions(dwb_core PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNCTIONS")
-
-#add_executable(talker src/talker.cpp)
-#target_include_directories(talker PUBLIC
-#  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-#  $<INSTALL_INTERFACE:include>)
-#ament_target_dependencies(
-#  talker
-#  "pluginlib"
-#  "rclcpp"
-#  "rcutils"
-#  "std_msgs"
-#)
 
 install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_plugins
   ARCHIVE DESTINATION lib
@@ -71,6 +56,9 @@ install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_plugins
 )
 install(DIRECTORY include/
   DESTINATION include/
+)
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
 )
 install(FILES plugins_description.xml
   DESTINATION share
