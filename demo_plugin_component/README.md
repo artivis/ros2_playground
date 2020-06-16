@@ -26,3 +26,14 @@ Open a `topic echo` to monitor the node output,
 ```terminal
 ros2 topic echo /chatter
 ```
+
+#### CRTP demo
+
+```terminal
+ros2 run rclcpp_components component_container
+```
+
+```terminal
+ros2 component load /ComponentManager demo_plugin_component ros2_playground::TalkerCrtpDerivedA
+ros2 component load /ComponentManager demo_plugin_component ros2_playground::TalkerCrtpDerivedB
+```

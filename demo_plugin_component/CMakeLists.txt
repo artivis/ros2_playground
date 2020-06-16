@@ -39,6 +39,7 @@ ament_target_dependencies(${PROJECT_NAME}_plugins ${plugins_dependencies})
 
 add_library(${PROJECT_NAME} SHARED
   src/talker_node.cpp
+  src/crtp_talker_node.cpp
 )
 ament_target_dependencies(${PROJECT_NAME} ${node_dependencies})
 # prevent pluginlib from using boost
@@ -47,6 +48,16 @@ target_compile_definitions(${PROJECT_NAME} PUBLIC "PLUGINLIB__DISABLE_BOOST_FUNC
 rclcpp_components_register_node(${PROJECT_NAME}
   PLUGIN "ros2_playground::TalkerNode"
   EXECUTABLE talker_node
+)
+
+rclcpp_components_register_node(${PROJECT_NAME}
+  PLUGIN "ros2_playground::TalkerCrtpDerivedA"
+  EXECUTABLE crtp_talker_a_node
+)
+
+rclcpp_components_register_node(${PROJECT_NAME}
+  PLUGIN "ros2_playground::TalkerCrtpDerivedB"
+  EXECUTABLE crtp_talker_b_node
 )
 
 install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_plugins
